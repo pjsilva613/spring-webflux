@@ -1,5 +1,6 @@
 package com.project.reactor.app.service.impl;
 
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Service;
 
 import com.project.reactor.app.model.Plato;
@@ -12,34 +13,13 @@ import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
-public class PlatoServiceImpl implements IPlatoService {
+public class PlatoServiceImpl extends CRUDImpl<Plato, String> implements IPlatoService {
 
-	
-	private final IPlatoRepository iPlatoRepository;
-	
-	@Override
-	public Mono<Plato> registrar(Plato p) {
-		return iPlatoRepository.save(p);
-	}
+	private final IPlatoRepository repository;
 
 	@Override
-	public Mono<Plato> modificar(Plato p) {
-		return iPlatoRepository.save(p);
-	}
-
-	@Override
-	public Flux<Plato> listar() {
-		return iPlatoRepository.findAll();
-	}
-
-	@Override
-	public Mono<Plato> listarPorId(String id) {
-		return iPlatoRepository.findById(id);
-	}
-
-	@Override
-	public Mono<Void> eliminar(String id) {
-		return iPlatoRepository.deleteById(id);
+	protected ReactiveMongoRepository<Plato, String> getRepo() {
+		return repository;
 	}
 
 }
